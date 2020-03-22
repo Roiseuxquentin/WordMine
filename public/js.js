@@ -10,9 +10,9 @@
 // ###################################################
 //WORDMINE
 
-const ip = "http://192.168.0.41"
-const port = 42222
-// 88.121.253.98 
+// const ip = "http://192.168.0.41"
+const ip = "http://88.121.253.98 "
+const port = 42333
 
 const mot = document.getElementById('mot')
 const listMot = document.getElementById('dico')
