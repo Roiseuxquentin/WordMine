@@ -39,18 +39,19 @@ app.post('/plume', (req,res) => {
   var time =  currentdate.getHours() + ":"  
              + currentdate.getMinutes() + ":" 
              + currentdate.getSeconds()
-
-  if ( DATA.mot ) {
-    if ( DATA.mot.length < 50 ) {
-      const dataClean = DATA.mot.replace('"',"").replace("'","").replace("<",'').replace('`','').slice(0,50)
+ 
+  if ( DATA.nom ) {
+    if ( DATA.nom.length < 50 ) {
+      const dataClean = DATA.nom.replace('"',"").replace("'","").replace("<",'').replace('`','').slice(0,50)
 
       fs.readFile('./abc/dico.json', 'utf-8', (err, data) => { 
         if (err) throw err
 
-        let buffer = JSON.parse(data).messages
+        let buffer = JSON.parse(data).dico
       // config.json
-        buffer.push({ ip : ip.replace("::ffff:","") , mot: dataClean , date : time })
-        const newData = { messages : buffer }    
+        buffer.push({ ip : ip, nom: dataClean , date : time })
+        // buffer.push({ ip : ip.replace("::ffff:","") , nom: dataClean , date : time })
+        const newData = { dico : buffer }    
 
         if (data.length < 100000) {
           fs.writeFile('./abc/dico.json', JSON.stringify(newData) , (err, data) => {
