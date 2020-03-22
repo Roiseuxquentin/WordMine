@@ -9,6 +9,9 @@
 // #.\=============================================/.#
 // ###################################################
 // WORDMINE
+
+const port = 42222
+
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -42,14 +45,16 @@ app.post('/plume', (req,res) => {
  
   if ( DATA.nom ) {
     if ( DATA.nom.length < 50 ) {
-      const dataClean = DATA.nom.replace('"',"").replace("'","").replace("<",'').replace('`','').slice(0,50)
+      let comment 
+      (DATA.nom.includes("/")) ? (comment = true) : (comment = false);
+      const dataClean = DATA.nom.replace('/',"").replace('"',"").replace("'","").replace("<",'').replace('`','').slice(0,50)
 
       fs.readFile('./abc/dico.json', 'utf-8', (err, data) => { 
         if (err) throw err
 
         let buffer = JSON.parse(data).dico
       // config.json
-        buffer.push({ ip : ip, nom: dataClean , date : time })
+        buffer.push({ ip : ip, nom: dataClean , date : time, comment : comment })
         // buffer.push({ ip : ip.replace("::ffff:","") , nom: dataClean , date : time })
         const newData = { dico : buffer }    
 
@@ -77,4 +82,4 @@ app.get('/dico', (req,res) => {
   }) 
 })
 
-app.listen(42222, () =>  curl.get('http://roiseux.fr', (err, response, body) => console.log(`ip public :${body}\nport :42222`) ) )
+app.listen(port, () =>  curl.get('http://roiseux.fr', (err, response, body) => console.log(`ip public :${body}\nport :${String(port)}`) ) )
